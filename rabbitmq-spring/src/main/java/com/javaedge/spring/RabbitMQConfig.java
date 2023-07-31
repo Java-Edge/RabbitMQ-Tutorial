@@ -40,6 +40,8 @@ public class RabbitMQConfig {
 		connectionFactory.setUsername("guest");
 		connectionFactory.setPassword("guest");
 		connectionFactory.setVirtualHost("/");
+        // 开启confirm模式
+        connectionFactory.setPublisherConfirms(true);
 		return connectionFactory;
 	}
 	

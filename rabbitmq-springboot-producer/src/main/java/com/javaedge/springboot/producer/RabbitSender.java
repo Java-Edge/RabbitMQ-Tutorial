@@ -42,8 +42,10 @@ public class RabbitSender {
     /**
      * 回调函数: return返回
      */
-    final ReturnCallback returnCallback = (message, replyCode, replyText, exchange, routingKey) -> System.err.println("return exchange: " + exchange + ", routingKey: "
-            + routingKey + ", replyCode: " + replyCode + ", replyText: " + replyText);
+    final ReturnCallback returnCallback = (message, replyCode, replyText, exchange, routingKey) -> {
+        System.err.println("return exchange: " + exchange + ", routingKey: "
+                + routingKey + ", replyCode: " + replyCode + ", replyText: " + replyText);
+    };
 
     /**
      * 发送消息方法调用: 构建Message消息
