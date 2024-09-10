@@ -1,30 +1,24 @@
 package com.javaedge.spring;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import com.rabbitmq.client.Channel;
+import com.javaedge.spring.adapter.MessageDelegate;
+import com.javaedge.spring.convert.ImageMessageConverter;
+import com.javaedge.spring.convert.PDFMessageConverter;
+import com.javaedge.spring.convert.TextMessageConverter;
+import com.javaedge.spring.util.MqConstant;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.amqp.support.ConsumerTagStrategy;
 import org.springframework.amqp.support.converter.ContentTypeDelegatingMessageConverter;
-import org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.javaedge.spring.adapter.MessageDelegate;
-import com.javaedge.spring.convert.ImageMessageConverter;
-import com.javaedge.spring.convert.PDFMessageConverter;
-import com.javaedge.spring.convert.TextMessageConverter;
+import java.util.UUID;
 
 /**
  * @author JavaEdge
@@ -64,7 +58,32 @@ public class RabbitMQConfig {
     @Bean  
     public TopicExchange exchange001() {  
         return new TopicExchange("topic001", true, false);  
-    }  
+    }
+
+    /**
+     * 简单模式测试队列
+     */
+    @Bean
+    public Queue myQueue(){
+        return new Queue("testQueue",true);
+    }
+
+    /**
+     * 工作模式测试队列
+     */
+    @Bean
+    public Queue myQueue2(){
+        return new Queue("workQueue",true);
+    }
+
+    /**
+     * 工作模式测试队列
+     * @return
+     */
+    @Bean
+    public Queue myQueue3(){
+        return new Queue(MqConstant.MQ_QUEUE_2_Manual_Ack,true);
+    }
 
     @Bean  
     public Queue queue001() {

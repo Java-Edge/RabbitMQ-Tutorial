@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+//import com.javaedge.spring.pattern.send.SendService1;
+import com.javaedge.spring.pattern.send.SendService2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.core.Binding;
@@ -61,14 +63,12 @@ public class RabbitSpringApplicationTests {
 				.bind(new Queue("test.fanout.queue", false))
 				.to(new FanoutExchange("test.fanout", false, false)));
 
-		//清空队列数据
+		// 清空队列数据
 		rabbitAdmin.purgeQueue("test.topic.queue", false);
 	}
-
 	
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
-	
 	
 	@Test
 	public void testSendMessage() throws Exception {
@@ -196,4 +196,29 @@ public class RabbitSpringApplicationTests {
 //			Message message = new Message(body, messageProperties);
 //			rabbitTemplate.send("", "pdf_queue", message);
 	}
+
+//	@Autowired
+//	private SendService1 sendService1;
+
+
+	@Autowired
+	private SendService2 sendService2;
+	/**
+	 * 测试-简单模式
+	 */
+//	@Test
+//	public void test1() {
+//		sendService1.sendMsg("老A欢迎同学们");
+//	}
+
+	/**
+	 * 测试-工作队列模式
+	 */
+	@Test
+	public void test2() {
+		for (int i = 0; i < 20; i++) {
+			sendService2.sendMsg(String.format("老A欢迎同学%s",i),0);
+		}
+	}
+
 }

@@ -32,4 +32,3 @@ public class ProducerDirectExchange {
 		channel.basicPublish(exchangeName, routingKey , null , msg.getBytes());
 	}
 }
-

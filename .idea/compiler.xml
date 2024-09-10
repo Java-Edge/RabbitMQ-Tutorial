@@ -18,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="rabbitmq-spring" options="-parameters" />
       <module name="rabbitmq-springboot-consumer" options="-parameters" />
       <module name="rabbitmq-springboot-producer" options="-parameters" />
     </option>
