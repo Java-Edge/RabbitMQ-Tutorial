@@ -12,29 +12,29 @@ import com.rabbitmq.client.QueueingConsumer.Delivery;
  * @author JavaEdge
  */
 public class Consumer4TopicExchange {
-	public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ConnectionFactory() ;
+    public static void main(String[] args) throws Exception {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("localhost");
         connectionFactory.setPort(5672);
-		connectionFactory.setVirtualHost("/");
+        connectionFactory.setVirtualHost("/");
         connectionFactory.setAutomaticRecoveryEnabled(true);
         connectionFactory.setNetworkRecoveryInterval(3000);
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
-		String exchangeName = "test_topic_exchange";
-		String exchangeType = "topic";
-		String queueName = "test_topic_queue";
+        String exchangeName = "test_topic_exchange";
+        String exchangeType = "topic";
+        String queueName = "test_topic_queue";
 //		String routingKey = "user.#";
-		String routingKey = "user.*";
-		channel.exchangeDeclare(exchangeName, exchangeType, true, false, false, null);
-		channel.queueDeclare(queueName, false, false, false, null);
-		channel.queueBind(queueName, exchangeName, routingKey);
+        String routingKey = "user.*";
+        channel.exchangeDeclare(exchangeName, exchangeType, true, false, false, null);
+        channel.queueDeclare(queueName, false, false, false, null);
+        channel.queueBind(queueName, exchangeName, routingKey);
         QueueingConsumer consumer = new QueueingConsumer(channel);
         channel.basicConsume(queueName, true, consumer);
-        while(true){
-            Delivery delivery = consumer.nextDelivery();  
-            String msg = new String(delivery.getBody());    
+        while (true) {
+            Delivery delivery = consumer.nextDelivery();
+            String msg = new String(delivery.getBody());
             System.out.println("Get Message：" + msg);
-        } 
-	}
+        }
+    }
 }

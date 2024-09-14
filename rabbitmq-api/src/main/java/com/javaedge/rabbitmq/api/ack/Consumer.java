@@ -24,7 +24,7 @@ public class Consumer {
 		channel.exchangeDeclare(exchangeName, "topic", true, false, null);
 		channel.queueDeclare(queueName, true, false, false, null);
 		channel.queueBind(queueName, exchangeName, routingKey);
-		// 手工签收必须要关闭:autoAck = false
+		// 手工签收须关闭:autoAck = false
 		channel.basicConsume(queueName, false, new MyConsumer(channel));
 	}
 }
